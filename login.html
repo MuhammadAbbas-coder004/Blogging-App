@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - BlogFlow</title>
+
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <link rel="stylesheet" href="login.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+  <div class="login-card">
+    <h2>Login</h2>
+    <p>Welcome back, please login to continue</p>
+
+    <form id="login-form">
+      <div class="form-group">
+        <input type="email" name="email" placeholder="Email" required>
+      </div>
+
+      <div class="form-group">
+        <input type="password" name="password" placeholder="Password" required>
+      </div>
+
+      <button type="submit" class="btn">Login</button>
+    </form>
+
+    <button id="google-btn" class="google-btn">
+      <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google Logo">
+      Continue with Google
+    </button>
+
+    <div class="forgot-password">
+      <button id="forgot-btn">Forgot Password?</button>
+    </div>
+
+    <div class="signup">
+      Don't have an account? <a href="signup.html">Sign Up</a>
+    </div>
+  </div>
+
+  <script type="module" src="login.js"></script>
+</body>
+</html>

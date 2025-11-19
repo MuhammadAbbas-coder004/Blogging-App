@@ -1,0 +1,193 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+/* ANIMATED BACKGROUND */
+body {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #4f46e5, #10b981, #14b8a6);
+  background-size: 400% 400%;
+  animation: gradientShift 8s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* CARD */
+.register-card {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(20px);
+  padding: 2.5rem 2rem;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  width: 90%;
+  max-width: 440px;
+  color: white;
+  animation: fadeIn 0.8s ease;
+  position: relative;
+  z-index: 1; /* keep form on top */
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* HEADER */
+h2 {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+p {
+  text-align: center;
+  font-size: 0.95rem;
+  margin-bottom: 1.8rem;
+  opacity: 0.9;
+}
+
+/* FORM */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+input {
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+input::placeholder {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+input:focus {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+/* Upload icon button */
+#profilePic {
+  display: none;
+}
+
+.upload-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.upload-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.upload-icon i {
+  color: white;
+}
+
+.upload-icon:hover {
+  transform: scale(1.2);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+/* BUTTONS */
+.btn, .google-btn {
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  padding: 0.9rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: transform 0.2s, box-shadow 0.3s;
+}
+
+.btn {
+  background: linear-gradient(90deg, #4f46e5, #10b981);
+  color: white;
+}
+
+.google-btn {
+  background: #fff;
+  color: #333;
+}
+
+.btn:hover, .google-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+/* SIGNUP LINK */
+.signup {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.signup a {
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.signup a:hover {
+  text-decoration: underline;
+}
+
+.google-btn img {
+  width: 20px;
+  height: 20px;
+}
+
+@media (max-width: 480px) {
+  .register-card {
+    padding: 2rem 1.5rem;
+  }
+  .form-row {
+    flex-direction: column;
+  }
+}

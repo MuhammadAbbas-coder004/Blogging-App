@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join BlogFlow</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="registered.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+  <div class="register-card">
+    <h2>Join BlogFlow</h2>
+    <p>Start your journey today</p>
+
+    <form id="signup-form">
+      <div class="form-row">
+        <div class="form-group">
+          <input type="text" name="firstName" placeholder="First Name" required>
+        </div>
+        <div class="form-group">
+          <input type="text" name="lastName" placeholder="Last Name" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <input type="email" name="email" placeholder="Email" required>
+      </div>
+
+      <div class="form-group">
+        <input type="password" name="password" placeholder="Password" required>
+      </div>
+
+      <div class="form-group">
+        <input type="password" name="confirmPassword" placeholder="Confirm Password" required>
+      </div>
+
+      <!-- Upload profile pic button with icon -->
+      <div class="form-group upload-wrapper">
+        <input type="file" id="profilePic" accept="image/*">
+        <label for="profilePic" class="upload-icon">
+    <i class="fa-solid fa-user"></i>
+        </label>
+      </div>
+
+      <button type="submit" class="btn">
+        <i class="fas fa-paper-plane"></i> Join BlogFlow
+      </button>
+    </form>
+
+    <button id="google-btn" class="google-btn">
+      <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google Logo">
+      Continue with Google
+    </button>
+
+    <div class="signup">
+      Already have an account? <a href="login.html">Login</a>
+    </div>
+  </div>
+
+  <script type="module" src="signup.js"></script>
+</body>
+</html>
