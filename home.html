@@ -2,42 +2,58 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta-name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home - Personal Blogging App</title>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Blogging App</title>
   <link rel="stylesheet" href="home.css">
-
-  <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
 <body>
 
   <!-- NAVBAR -->
   <nav class="navbar">
     <div class="logo">Personal Blogging App</div>
-    <a href="login.html" class="login-btn">Login</a>
+    <div class="user-section">
+      <img id="user-profile" src="default-profile.jpg" alt="Profile Picture">
+      <button id="logout-btn" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+    </div>
   </nav>
 
-  <!-- MAIN CONTENT -->
-  <section class="hero">
-    <h1 class="greet">Good Morning Readers</h1>
-    <h2 class="blogs-title">All Blogs</h2>
+  <!-- DASHBOARD TITLE -->
+  <header class="dashboard-header">
+    <h1>Dashboard</h1>
+    <p>Share your thoughts and stories below.</p>
+  </header>
 
-    <div class="blogs-container">
-      
-      <div class="blog-card">
-<h3>Share Your Stories</h3>
-<p>Post your thoughts and short stories — connect with others through your words.</p>
-      </div>
-
-      <div class="blog-card">
-<h3>Discover Fresh Posts</h3>
-<p>Read inspiring stories shared by people every day and explore trending text content.</p>
-      </div>
-    </div>
+  <!-- STORY FORM -->
+  <section class="story-form-section">
+    <form id="story-form">
+      <input type="text" placeholder="Story Title" id="story-title" required>
+      <textarea placeholder="Story Description" id="story-desc" required></textarea>
+      <button type="submit" class="publish-btn"><i class="fas fa-paper-plane"></i> Publish Blog</button>
+    </form>
   </section>
 
-
-<script type="module" src="./home.js"></script>  
+  <!-- MY BLOGS -->
+  <section class="my-blogs">
+    <h2>My Blogs</h2>
+    <div class="blogs-container">
+      <!-- Example Blog Card -->
+      <!-- <div class="blog-card">
+        <div class="card-header">
+          <img src="default-profile.jpg" class="profile-pic" alt="User Profile">
+          <span class="user-name">John Doe</span>
+          <span class="publish-date">Nov 21, 2025</span>
+        </div>
+        <h3 class="card-title">Share Your Stories</h3>
+        <p class="card-desc">Post your thoughts and short stories — connect with others through your words.</p>
+        <div class="card-actions">
+          <button class="edit-btn"><i class="fas fa-edit"></i> Edit</button>
+          <button class="delete-btn"><i class="fas fa-trash-alt"></i> Delete</button>
+        </div>
+      </div> -->
+    </div>
+  </section>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+ <script type="module" src="home.js"></script> 
 </body>
 </html>

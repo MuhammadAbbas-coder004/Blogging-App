@@ -1,19 +1,30 @@
-import { createUserWithEmailAndPassword,  signInWithPopup } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+import { 
+  createUserWithEmailAndPassword, 
+  signInWithPopup 
+} from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+
 import { auth, provider, db } from "./config.js";
-import { collection, addDoc } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+
+import { 
+  collection, 
+  addDoc, 
+  setDoc, 
+  doc 
+} from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
 
 
+// ---------------- CLOUDINARY UPLOAD ----------------
 let uploadImage = null;
 
 const myWidget = cloudinary.createUploadWidget(
   {
-    cloudName: "dptuo3qjf", 
+    cloudName: "dptuo3qjf",
     uploadPreset: "user_img",
   },
   (error, result) => {
     if (!error && result && result.event === "success") {
-      console.log("Image uploaded:", result.info.secure_url);
       uploadImage = result.info.secure_url;
+
       Swal.fire({
         icon: "success",
         text: "Profile image uploaded successfully!",
@@ -26,64 +37,70 @@ const myWidget = cloudinary.createUploadWidget(
 
 document.getElementById("profilePic").addEventListener("click", () => {
   myWidget.open();
-})
+});
+
+
+// ---------------- FORM FIELDS ----------------
 const registerForm = document.querySelector("#signup-form");
 const firstName = document.querySelector("#f-Name");
 const lastName = document.querySelector("#l-Name");
 const email = document.querySelector("#email");
 const password = document.querySelector("#password");
-const conformpassword = document.querySelector("#C-password");
+const confirmPassword = document.querySelector("#C-password");
 
 
-
-
-
+// ---------------- REGISTER USER ----------------
 registerForm.addEventListener("submit", async (event) => {
   event.preventDefault();
-  
-  if (!email.value || !password.value) {
+
+  // ---- Validation ----
+  if (!firstName.value || !lastName.value || !email.value || !password.value || !confirmPassword.value) {
     return Swal.fire({
       icon: "warning",
       text: "Please fill in all fields.",
     });
   }
 
+  if (password.value !== confirmPassword.value) {
+    return Swal.fire({
+      icon: "warning",
+      text: "Passwords do not match!",
+    });
+  }
+
   if (!uploadImage) {
     return Swal.fire({
       icon: "warning",
-      text: "Please upload a profile image before registering.",
+      text: "Please upload a profile picture.",
     });
   }
 
   try {
-
+    // CREATE USER IN AUTH (ONLY EMAIL + PASSWORD)
     const userCredential = await createUserWithEmailAndPassword(
       auth,
-      firstName.value,
-      lastName.value,
       email.value,
-      password.value,
-      conformpassword.value,
-
+      password.value
     );
+
     const user = userCredential.user;
-    console.log(" User created:", user.uid);
-    await addDoc(collection(db, "users"), {
+    await setDoc(doc(db, "users", user.uid), {
+      firstName: firstName.value,
+      lastName: lastName.value,
       email: email.value,
       profile: uploadImage,
       uid: user.uid,
-    })
-    await Swal.fire({
-      icon: "success",
-      title: "Registration Successful!",
-      text: "Your account has been created.",
-      confirmButtonText: "Go to Login",
     });
 
-    window.location = "login.html";
-  } catch (error) {
-    console.error("Error:", error.message);
+    Swal.fire({
+      icon: "success",
+      title: "Registration Successful!",
+      text: "Your account has been registered.",
+    }).then(() => {
+      window.location = "login.html";
+    });
 
+  } catch (error) {
     Swal.fire({
       icon: "error",
       title: "Registration Failed",
@@ -94,8 +111,8 @@ registerForm.addEventListener("submit", async (event) => {
     });
   }
 });
-
 const googleBtn = document.querySelector("#google-btn");
+
 googleBtn.addEventListener("click", () => {
   signInWithPopup(auth, provider)
     .then(async (result) => {
@@ -105,9 +122,10 @@ googleBtn.addEventListener("click", () => {
         name: user.displayName,
         email: user.email,
         profile: user.photoURL,
-        uid: user.uid
+        uid: user.uid,
       });
-      window.location = "index.html";
+
+      window.location = "home.html";
     })
     .catch((error) => {
       console.log(error.message);

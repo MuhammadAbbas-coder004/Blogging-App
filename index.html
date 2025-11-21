@@ -3,51 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard - Blogging App</title>
+  <title>Home - Personal Blogging App</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
 
   <!-- NAVBAR -->
   <nav class="navbar">
     <div class="logo">Personal Blogging App</div>
-    <div class="user-section">
-      <img id="user-profile" src="default-profile.jpg" alt="Profile Picture">
-      <button id="logout-btn" class="btn logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
-    </div>
+    <a href="login.html" class="login-btn">Login</a>
   </nav>
 
-  <!-- DASHBOARD TITLE -->
-  <header class="dashboard-header">
-    <h1>Dashboard</h1>
-    <p>Share your thoughts and stories below.</p>
-  </header>
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <h1 class="greet">Good Morning Readers</h1>
+    <h2 class="blogs-title">All Blogs</h2>
 
-  <!-- STORY FORM -->
-  <section class="story-form-section">
-    <form id="story-form">
-      <input type="text" placeholder="Story Title" id="story-title" required>
-      <textarea placeholder="Story Description" id="story-desc" required></textarea>
-      <button type="submit" class="btn publish-btn"><i class="fas fa-paper-plane"></i> Publish Blog</button>
-    </form>
-  </section>
-
-  <!-- MY BLOGS -->
-  <section class="my-blogs">
-    <h2>My Blogs</h2>
     <div class="blogs-container">
-      <!-- Example Blog Card -->
+      <!-- Single Blog Card -->
       <div class="blog-card">
         <div class="card-header">
-          <img src="default-profile.jpg" alt="User Profile" class="profile-pic">
+          <img src="default-profile.jpg" class="profile-pic" alt="User Profile">
+          <span class="user-name">John Doe</span>
+          <span class="publish-date">Nov 21, 2025</span>
         </div>
-        <h3 class="card-title">Story Title</h3>
-        <p class="card-desc">This is the description of your story. Typing here feels comfortable because the input height is now increased for better user experience.</p>
-        <div class="card-actions">
-          <button class="edit-btn"><i class="fas fa-edit"></i> Edit</button>
-          <button class="delete-btn"><i class="fas fa-trash-alt"></i> Delete</button>
-        </div>
+
+        <h3 class="card-title">Share Your Stories</h3>
+        <p class="card-desc">Post your thoughts and short stories — connect with others through your words.</p>
+
+        <button class="see-all-btn"><i class="fas fa-eye"></i> See all from this user</button>
       </div>
     </div>
   </section>

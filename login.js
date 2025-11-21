@@ -54,7 +54,7 @@ googleBtn.addEventListener("click", () => {
         profile: user.photoURL,
         uid: user.uid
       });
-      window.location = "index.html";
+      window.location = "home.html";
     })
     .catch((error) => {
       console.log(error.message);
