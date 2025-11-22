@@ -15,17 +15,12 @@ import {
   updatePassword 
 } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
 
-// ---------------- DOM SELECT ----------------
-
-// Navbar
 const navProfilePic = document.querySelector("#user-profile");
 const logoutBtn = document.querySelector("#logout-btn");
 
-// Profile card
 const bigProfilePic = document.querySelector("#form-user-profile");
 const profileCard = document.querySelector(".profile-card");
 
-// Name under big profile
 const nameDiv = document.createElement("p");
 nameDiv.className = "name";
 nameDiv.style.color = "white";
@@ -34,20 +29,18 @@ nameDiv.style.textAlign = "center";
 nameDiv.style.margin = "10px 0";
 profileCard.insertBefore(nameDiv, bigProfilePic.nextSibling);
 
-// Password inputs and form
 const userForm = document.querySelector("#user-form");
 const oldPassInput = document.querySelector("#old-password");
 const newPassInput = document.querySelector("#new-password");
 const repeatPassInput = document.querySelector("#repeat-Password");
 
-// ---------------- LOGOUT ----------------
 logoutBtn.addEventListener("click", () => {
   signOut(auth)
     .then(() => window.location = "login.html")
     .catch(() => Swal.fire({ icon: "error", title: "Error logging out" }));
 });
 
-// ---------------- FETCH USER DATA ----------------
+
 onAuthStateChanged(auth, async (user) => {
   if (!user) return window.location = "login.html";
 
@@ -74,7 +67,6 @@ onAuthStateChanged(auth, async (user) => {
   }
 });
 
-// ---------------- UPDATE PASSWORD ----------------
 userForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 

@@ -13,7 +13,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
 
 
-// ---------------- CLOUDINARY UPLOAD ----------------
+
 let uploadImage = null;
 
 const myWidget = cloudinary.createUploadWidget(
@@ -40,7 +40,7 @@ document.getElementById("profilePic").addEventListener("click", () => {
 });
 
 
-// ---------------- FORM FIELDS ----------------
+
 const registerForm = document.querySelector("#signup-form");
 const firstName = document.querySelector("#f-Name");
 const lastName = document.querySelector("#l-Name");
@@ -49,11 +49,10 @@ const password = document.querySelector("#password");
 const confirmPassword = document.querySelector("#C-password");
 
 
-// ---------------- REGISTER USER ----------------
+
 registerForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
-  // ---- Validation ----
   if (!firstName.value || !lastName.value || !email.value || !password.value || !confirmPassword.value) {
     return Swal.fire({
       icon: "warning",
@@ -76,7 +75,7 @@ registerForm.addEventListener("submit", async (event) => {
   }
 
   try {
-    // CREATE USER IN AUTH (ONLY EMAIL + PASSWORD)
+
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       email.value,

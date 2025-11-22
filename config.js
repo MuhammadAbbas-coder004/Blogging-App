@@ -6,7 +6,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyC6LVKF-E3-v3EfqlyvbExnSQ9jL9cRb10",
   authDomain: "facebook-authentication-741ad.firebaseapp.com",
   projectId: "facebook-authentication-741ad",
-  storageBucket: "facebook-authentication-741ad.appspot.com", // Fixed
+  storageBucket: "facebook-authentication-741ad.appspot.com", 
   messagingSenderId: "847457968053",
   appId: "1:847457968053:web:a069689373a3b910c283fc",
   measurementId: "G-0ENNEY6HBD",
