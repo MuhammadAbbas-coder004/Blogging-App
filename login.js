@@ -16,7 +16,7 @@ loginForm.addEventListener("submit", (event) => {
   signInWithEmailAndPassword(auth, loginEmail.value, loginPassword.value)
     .then((userCredential) => {
       console.log(userCredential.user);
-      window.location = "index.html";
+      window.location = "home.html";
     })
     .catch((error) => {
       Swal.fire({

@@ -1,6 +1,6 @@
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
 import { auth, db } from "./config.js";
-import { collection, addDoc, getDocs, query, where, deleteDoc, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+import { collection, addDoc, getDocs, query, where, deleteDoc, doc, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
 
 // DOM Elements
 const userImg = document.querySelector("#user-profile");
@@ -8,27 +8,23 @@ const logoutBtn = document.querySelector("#logout-btn");
 const storyForm = document.querySelector("#story-form");
 const blogsContainer = document.querySelector(".blogs-container");
 
-// Get user profile & name (supports Google login & email/password)
+// Get user profile & name (Google + Email/Password fix)
 async function getUserProfile(uid, userAuth) {
   const q = query(collection(db, "users"), where("uid", "==", uid));
   const snap = await getDocs(q);
 
-  let profile = "default-profile.jpg";
-  let name = "Anonymous";
+  let profile = userAuth.photoURL || "default-profile.jpg";
+  let name = userAuth.displayName || "Anonymous";
 
   if (!snap.empty) {
     const data = snap.docs[0].data();
     profile = data.profile || profile;
+
     if (data.firstName || data.lastName) {
       name = `${data.firstName || ""} ${data.lastName || ""}`.trim();
     } else if (data.name) {
       name = data.name;
     }
-  } 
-
-  // If Firestore has no name, use Google displayName (from userAuth)
-  if (name === "Anonymous" && userAuth.displayName) {
-    name = userAuth.displayName;
   }
 
   return { profile, name };
@@ -66,24 +62,41 @@ async function loadUserBlogs(uid) {
     blogsContainer.appendChild(card);
   });
 
-  // Add delete functionality
+  // DELETE BLOG WORK (added)
   document.querySelectorAll(".delete-btn").forEach(btn => {
     btn.addEventListener("click", async (e) => {
       const card = e.target.closest(".blog-card");
       const blogId = card.dataset.id;
+
       if (confirm("Are you sure you want to delete this blog?")) {
         await deleteDoc(doc(db, "blogs", blogId));
-        loadUserBlogs(uid); // reload blogs
+        loadUserBlogs(uid);
       }
     });
   });
 
-  // Edit button placeholder
+  // EDIT BLOG WORK (added)
   document.querySelectorAll(".edit-btn").forEach(btn => {
-    btn.addEventListener("click", (e) => {
+    btn.addEventListener("click", async (e) => {
       const card = e.target.closest(".blog-card");
       const blogId = card.dataset.id;
-      alert(`You can implement edit functionality for blog ID: ${blogId}`);
+
+      // get old values
+      const oldTitle = card.querySelector(".card-title").innerText;
+      const oldDesc = card.querySelector(".card-desc").innerText;
+
+      // simple edit prompt (no UI changes)
+      const newTitle = prompt("Enter new title:", oldTitle);
+      const newDesc = prompt("Enter new description:", oldDesc);
+
+      if (newTitle !== null && newDesc !== null) {
+        await updateDoc(doc(db, "blogs", blogId), {
+          title: newTitle,
+          description: newDesc
+        });
+
+        loadUserBlogs(uid);
+      }
     });
   });
 }
@@ -92,24 +105,28 @@ async function loadUserBlogs(uid) {
 onAuthStateChanged(auth, async (user) => {
   if (user) {
     const { profile, name } = await getUserProfile(user.uid, user);
+
     userImg.src = profile;
 
-    // Ensure Firestore has user info saved
-    const userRef = doc(db, "users", user.uid);
-    await setDoc(userRef, { name: name, profile: profile, uid: user.uid }, { merge: true });
+    await setDoc(doc(db, "users", user.uid), {
+      name: name,
+      profile: profile,
+      uid: user.uid
+    }, { merge: true });
 
     loadUserBlogs(user.uid);
   } else {
-    window.location = "login.html"; // Not logged-in
+    window.location = "login.html";
   }
 });
 
-// Publish new blog
+// Publish blog
 storyForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   const title = document.querySelector("#story-title").value;
   const desc = document.querySelector("#story-desc").value;
   const user = auth.currentUser;
+
   const { profile, name } = await getUserProfile(user.uid, user);
 
   await addDoc(collection(db, "blogs"), {
