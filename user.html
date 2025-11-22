@@ -13,23 +13,23 @@
 <div class="navbar">
   <div class="nav-left">Personal Blogging App</div>
   <div class="nav-right">
-    <img src="user.jpg" alt="User Profile">
-    <button>Logout</button>
+    <img  id="user-profile" src="user.jpg" alt="User Profile">
+    <button id="logout-btn" >Logout</button>
   </div>
 </div>
 
 <!-- PROFILE CARD -->
 <div class="profile-card">
   <h2>Profile</h2>
-  <img src="user.jpg" alt="Profile" class="big-profile">
-  
-  <input type="password" placeholder="Old Password">
-  <input type="password" placeholder="New Password">
-  <input type="password" placeholder="Repeat Password">
-  
+  <img id="form-user-profile" src="user.jpg" alt="Profile" class="big-profile">
+  <form id="user-form">
+  <input id="old-password"  type="password" placeholder="Old Password">
+  <input id="new-password"  type="password" placeholder="New Password">
+  <input  id="repeat-Password" type="password" placeholder="Repeat Password">
   <button class="update-btn">🔄 Update Password</button>
+  </form>
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script  type="module" src="./user.js"></script>
 </body>
 </html>

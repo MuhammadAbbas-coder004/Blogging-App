@@ -50,8 +50,8 @@ body {
 }
 
 .nav-right img {
-  width: 45px;
-  height: 45px;
+  width: 34%;
+  height: 50px;
   border-radius: 50%;
   border: 2px solid rgba(255,255,255,0.4);
 }

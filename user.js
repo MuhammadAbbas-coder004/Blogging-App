@@ -1,79 +1,120 @@
-import { onAuthStateChanged, signOut, updatePassword, reauthenticateWithCredential, EmailAuthProvider } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
-import { auth } from "./config.js";
+import { 
+  collection, 
+  getDocs, 
+  query, 
+  where 
+} from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
 
-// DOM Elements
-const navProfilePic = document.querySelector(".nav-right img");
-const profileCardPic = document.querySelector(".big-profile");
-const updateBtn = document.querySelector(".update-btn");
+import { auth, db } from "./config.js";
 
-// Create name element dynamically
+import { 
+  signOut, 
+  onAuthStateChanged, 
+  reauthenticateWithCredential, 
+  EmailAuthProvider, 
+  updatePassword 
+} from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+
+// ---------------- DOM SELECT ----------------
+
+// Navbar
+const navProfilePic = document.querySelector("#user-profile");
+const logoutBtn = document.querySelector("#logout-btn");
+
+// Profile card
+const bigProfilePic = document.querySelector("#form-user-profile");
 const profileCard = document.querySelector(".profile-card");
-let nameEl = document.createElement("p");
-nameEl.className = "profile-name";
-nameEl.style.color = "white";
-nameEl.style.fontWeight = "600";
-nameEl.style.margin = "10px 0";
-profileCard.insertBefore(nameEl, profileCardPic.nextSibling);
 
-// Password inputs
-const oldPass = profileCard.querySelector('input[placeholder="Old Password"]');
-const newPass = profileCard.querySelector('input[placeholder="New Password"]');
-const repeatPass = profileCard.querySelector('input[placeholder="Repeat Password"]');
+// Name under big profile
+const nameDiv = document.createElement("p");
+nameDiv.className = "name";
+nameDiv.style.color = "white";
+nameDiv.style.fontSize = "18px";
+nameDiv.style.textAlign = "center";
+nameDiv.style.margin = "10px 0";
+profileCard.insertBefore(nameDiv, bigProfilePic.nextSibling);
 
-// Logout button
-const logoutBtn = document.querySelector(".nav-right button");
+// Password inputs and form
+const userForm = document.querySelector("#user-form");
+const oldPassInput = document.querySelector("#old-password");
+const newPassInput = document.querySelector("#new-password");
+const repeatPassInput = document.querySelector("#repeat-Password");
+
+// ---------------- LOGOUT ----------------
 logoutBtn.addEventListener("click", () => {
-  signOut(auth).then(() => {
-    window.location = "index.html";
-  });
+  signOut(auth)
+    .then(() => window.location = "login.html")
+    .catch(() => Swal.fire({ icon: "error", title: "Error logging out" }));
 });
 
-// Auth state
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    const photoURL = user.photoURL || "default-profile.jpg";
-    const name = user.displayName || user.email;
+// ---------------- FETCH USER DATA ----------------
+onAuthStateChanged(auth, async (user) => {
+  if (!user) return window.location = "login.html";
 
-    // Set profile pics
-    navProfilePic.src = photoURL;
-    profileCardPic.src = photoURL;
+  try {
+    const q = query(collection(db, "users"), where("uid", "==", user.uid));
+    const snapshot = await getDocs(q);
+    const userData = snapshot.empty ? null : snapshot.docs[0].data();
 
-    // Set user name
-    nameEl.textContent = name;
-  } else {
-    window.location = "login.html";
+    const photo = userData?.profile || user.photoURL || "default-avatar.png";
+
+    let name = "User";
+    if (userData?.firstName || userData?.lastName) {
+      name = `${userData.firstName || ""} ${userData.lastName || ""}`.trim();
+    } else if (user.displayName) {
+      name = user.displayName;
+    }
+
+    navProfilePic.src = photo;
+    bigProfilePic.src = photo;
+    nameDiv.textContent = name;
+
+  } catch (err) {
+    console.error("Error fetching user data:", err);
   }
 });
 
-// Update password
-updateBtn.addEventListener("click", async () => {
-  const user = auth.currentUser;
+// ---------------- UPDATE PASSWORD ----------------
+userForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-  if (!oldPass.value || !newPass.value || !repeatPass.value) {
-    alert("Please fill all password fields!");
+  const user = auth.currentUser;
+  const oldPass = oldPassInput.value;
+  const newPass = newPassInput.value;
+  const repeatPass = repeatPassInput.value;
+
+  if (!newPass || !repeatPass) {
+    Swal.fire({ icon: "error", title: "Oops!", text: "Please fill all fields!" });
     return;
   }
 
-  if (newPass.value !== repeatPass.value) {
-    alert("New password and repeat password do not match!");
+  if (newPass !== repeatPass) {
+    Swal.fire({ icon: "error", title: "Oops!", text: "Passwords do not match!" });
     return;
   }
 
   try {
-    // Reauthenticate user with old password
-    const credential = EmailAuthProvider.credential(user.email, oldPass.value);
-    await reauthenticateWithCredential(user, credential);
+    const isPasswordUser = user.providerData.some(p => p.providerId === "password");
 
-    // Update password
-    await updatePassword(user, newPass.value);
-    alert("Password updated successfully!");
-    
-    // Clear inputs
-    oldPass.value = "";
-    newPass.value = "";
-    repeatPass.value = "";
-  } catch (error) {
-    console.error(error);
-    alert("Error updating password: " + error.message);
+    if (isPasswordUser) {
+      if (!oldPass) {
+        Swal.fire({ icon: "error", title: "Oops!", text: "Please enter old password!" });
+        return;
+      }
+      const credential = EmailAuthProvider.credential(user.email, oldPass);
+      await reauthenticateWithCredential(user, credential);
+    }
+
+    await updatePassword(user, newPass);
+
+    Swal.fire({ icon: "success", title: "Success", text: "Password updated successfully!", timer: 1500, showConfirmButton: false });
+
+    oldPassInput.value = "";
+    newPassInput.value = "";
+    repeatPassInput.value = "";
+
+  } catch (err) {
+    console.error("Error updating password:", err);
+    Swal.fire({ icon: "error", title: "Error", text: err.message });
   }
 });
