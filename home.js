@@ -2,12 +2,10 @@ import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/
 import { auth, db } from "./config.js";
 import { collection, addDoc, getDocs, query, where, deleteDoc, doc, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
 
-
 const userImg = document.querySelector("#user-profile");
 const logoutBtn = document.querySelector("#logout-btn");
 const storyForm = document.querySelector("#story-form");
 const blogsContainer = document.querySelector(".blogs-container");
-
 
 async function getUserProfile(uid, userAuth) {
   const q = query(collection(db, "users"), where("uid", "==", uid));
@@ -73,12 +71,10 @@ async function loadUserBlogs(uid) {
     });
   });
 
-
   document.querySelectorAll(".edit-btn").forEach(btn => {
     btn.addEventListener("click", async (e) => {
       const card = e.target.closest(".blog-card");
       const blogId = card.dataset.id;
-
 
       const oldTitle = card.querySelector(".card-title").innerText;
       const oldDesc = card.querySelector(".card-desc").innerText;
@@ -98,9 +94,12 @@ async function loadUserBlogs(uid) {
   });
 }
 
-
+// ----------------- onAuthStateChanged with last logged-in UID fix -----------------
 onAuthStateChanged(auth, async (user) => {
+  let uidToLoad;
+
   if (user) {
+    // User logged in
     const { profile, name } = await getUserProfile(user.uid, user);
 
     userImg.src = profile;
@@ -111,10 +110,24 @@ onAuthStateChanged(auth, async (user) => {
       uid: user.uid
     }, { merge: true });
 
-    loadUserBlogs(user.uid);
+    uidToLoad = user.uid;
+
+    // Save UID to localStorage
+    localStorage.setItem("lastLoggedInUID", uidToLoad);
   } else {
-    window.location = "login.html";
+    // User not logged in
+    const storedUID = localStorage.getItem("lastLoggedInUID");
+    if (storedUID) {
+      uidToLoad = storedUID;
+    } else {
+      // No previous login info, redirect
+      window.location = "index.html";
+      return;
+    }
   }
+
+  // Load blogs for the UID
+  loadUserBlogs(uidToLoad);
 });
 
 storyForm.addEventListener("submit", async (e) => {
@@ -145,7 +158,6 @@ storyForm.addEventListener("submit", async (e) => {
   storyForm.reset();
   loadUserBlogs(user.uid);
 });
-
 
 logoutBtn.addEventListener("click", () => {
   signOut(auth).then(() => {
