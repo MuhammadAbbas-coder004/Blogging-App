@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Blogs</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="userblogs.css">
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-left">
+      <h2 class="logo">Personal Blogging App</h2>
+    </div>
+
+    <!-- Hamburger toggle -->
+    <input type="checkbox" id="menu-toggle">
+    <label for="menu-toggle" class="menu-icon">
+      <i class="fas fa-bars"></i>
+    </label>
+
+    <div class="right-section">
+      <button class="login-btn">Login</button>
+    </div>
+  </nav>
+
+  <!-- BACK BUTTON SECTION -->
+  <div class="back-section">
+    <button class="back-btn"><i class="fas fa-arrow-left"></i> Back to all blogs</button>
+    <h2 class="all-from">All from <span class="user-header-name">User Name</span></h2>
+  </div>
+
+  <!-- USER DETAILS BIG -->
+  <section class="user-info">
+    <img src="default-profile.jpg" class="big-profile">
+    <h1 class="big-username">User Name</h1>
+    <p class="big-email">user@gmail.com</p>
+  </section>
+
+  <!-- USER BLOGS -->
+  <section class="blogs-section">
+    <div class="blogs-container">
+      <!-- BLOG CARDS -->
+      <div class="blog-card">
+        <div class="card-header">
+          <img src="default-profile.jpg" class="profile-pic">
+          <span class="user-name">John Doe</span>
+          <span class="publish-date">Jan 21, 2025</span>
+        </div>
+        <h3 class="card-title">Blog Title</h3>
+        <p class="card-desc">Blog description goes here...</p>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>
