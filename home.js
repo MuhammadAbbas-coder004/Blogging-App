@@ -1,6 +1,6 @@
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
 import { auth, db } from "./config.js";
-import { collection, addDoc, getDocs, query, where, deleteDoc, doc, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+import { collection, addDoc, getDocs, query, where, deleteDoc, doc, setDoc, updateDoc, Timestamp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
 
 const userImg = document.querySelector("#user-profile");
 const logoutBtn = document.querySelector("#logout-btn");
@@ -97,9 +97,8 @@ async function loadUserBlogs(uid) {
 
 onAuthStateChanged(auth, async (user) => {
   let uidToLoad;
-if (user) {
-    const { profile, name } = await getUserProfile(user.uid, user);
-
+  if (user) {
+const { profile, name } = await getUserProfile(user.uid, user);
     userImg.src = profile;
 
     await setDoc(doc(db, "users", user.uid), {
@@ -108,21 +107,19 @@ if (user) {
       uid: user.uid
     }, { merge: true });
 
+   
     uidToLoad = user.uid;
    
     localStorage.setItem("lastLoggedInUID", uidToLoad);
-  } 
-  else {
+  } else {
     const storedUID = localStorage.getItem("lastLoggedInUID");
     if (storedUID) {
       uidToLoad = storedUID;
     } else {
-      
+    
       window.location = "index.html";
-      return
-    }
-  }
-
+      return;
+    }}
 
   loadUserBlogs(uidToLoad);
 });
@@ -142,7 +139,7 @@ storyForm.addEventListener("submit", async (e) => {
     profile,
     firstName: name.split(" ")[0] || "",
     lastName: name.split(" ")[1] || "",
-    createdAt: new Date()
+    createdAt: Timestamp.fromDate(new Date()) 
   });
 
   Swal.fire({

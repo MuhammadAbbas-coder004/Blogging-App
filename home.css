@@ -73,15 +73,19 @@ body {
 
 /* BLOG CARDS */
 .my-blogs { margin-top: 70px; width: 90%; max-width: 800px; }
-.my-blogs h2 { margin-bottom: 1rem; }
-.blogs-container { display: flex; flex-direction: column; gap: 1.5rem; }
+.my-blogs h2 { margin-bottom: 1rem;  }
+.blogs-container { display: flex; flex-direction: column; gap: 1.5rem;
+
+
+
+}
 .blog-card { background: rgba(255,255,255,0.25); backdrop-filter: blur(20px); padding: 1rem; border-radius: 16px; color: #fff; box-shadow: 0 8px 20px rgba(0,0,0,0.35); }
 .card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
 .card-header .profile-pic { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; }
 .card-header .user-name { font-weight: 600; }
 .card-header .publish-date { margin-left: auto; font-size: 0.85rem; opacity: 0.8; }
-.card-title { text-align: center; font-size: 1.2rem; margin-bottom: 0.3rem; font-weight: 600; }
-.card-desc { text-align: center; margin-bottom: 0.5rem; min-height: 90px; }
+.card-title { text-align: center; font-size: 1.2rem; margin-bottom: 0.3rem; font-weight: 600;   word-wrap: break-word; /* wrap long words */ }
+.card-desc { text-align: center; margin-bottom: 0.5rem; min-height: 90px;   word-wrap: break-word; /* wrap long words */}
 .card-actions { display: flex; justify-content: center; gap: 1rem; margin-top: 10px; }
 .card-actions button { display: flex; align-items: center; gap: 5px; padding: 8px 14px; border-radius: 10px; border: none; font-weight: 600; cursor: pointer; color: #fff; transition: all 0.3s ease; }
 .edit-btn { background: linear-gradient(90deg, #4f46e5, #10b981); }

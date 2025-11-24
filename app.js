@@ -1,9 +1,9 @@
-import { collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+import { collection, getDocs, query, orderBy, Timestamp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
 import { db } from "./config.js";
 
 const blogsContainer = document.querySelector(".blogs-container");
 
-// LOGIN BUTTON: always redirect to login.html
+
 const loginBtn = document.querySelector(".login-btn");
 if (loginBtn) {
   loginBtn.addEventListener("click", () => {
@@ -11,7 +11,7 @@ if (loginBtn) {
   });
 }
 
-// Load all blogs
+
 async function loadAllBlogs() {
   if (!blogsContainer) return;
 
@@ -40,8 +40,8 @@ async function loadAllBlogs() {
 
     const seeBtn = cardHTML.querySelector(".see-all-btn");
     seeBtn.addEventListener("click", () => {
-      // Directly redirect with query param (uid)
-      window.location.href = `userblogs.html?uid=${data.uid}`;
+      localStorage.setItem("selectedUserUID", data.uid);
+      window.location.href = `userblogs.html`;
     });
 
     blogsContainer.appendChild(cardHTML);
