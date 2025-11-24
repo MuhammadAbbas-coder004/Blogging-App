@@ -94,12 +94,10 @@ async function loadUserBlogs(uid) {
   });
 }
 
-// ----------------- onAuthStateChanged with last logged-in UID fix -----------------
+
 onAuthStateChanged(auth, async (user) => {
   let uidToLoad;
-
-  if (user) {
-    // User logged in
+if (user) {
     const { profile, name } = await getUserProfile(user.uid, user);
 
     userImg.src = profile;
@@ -111,22 +109,21 @@ onAuthStateChanged(auth, async (user) => {
     }, { merge: true });
 
     uidToLoad = user.uid;
-
-    // Save UID to localStorage
+   
     localStorage.setItem("lastLoggedInUID", uidToLoad);
-  } else {
-    // User not logged in
+  } 
+  else {
     const storedUID = localStorage.getItem("lastLoggedInUID");
     if (storedUID) {
       uidToLoad = storedUID;
     } else {
-      // No previous login info, redirect
+      
       window.location = "index.html";
-      return;
+      return
     }
   }
 
-  // Load blogs for the UID
+
   loadUserBlogs(uidToLoad);
 });
 
