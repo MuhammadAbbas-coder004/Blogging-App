@@ -36,7 +36,7 @@ const repeatPassInput = document.querySelector("#repeat-Password");
 
 logoutBtn.addEventListener("click", () => {
   signOut(auth)
-    .then(() => window.location = "login.html")
+    .then(() => window.location = "index.html")
     .catch(() => Swal.fire({ icon: "error", title: "Error logging out" }));
 });
 

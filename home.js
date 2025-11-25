@@ -1,13 +1,20 @@
-import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+import { onAuthStateChanged, 
+  signOut } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+
 import { auth, db } from "./config.js";
-import { collection, addDoc, getDocs, query, where, deleteDoc, doc, setDoc, updateDoc, Timestamp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+
+import { collection, 
+  addDoc, getDocs, 
+   query, where,
+    deleteDoc, doc, setDoc, 
+    updateDoc,Timestamp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
 
 const userImg = document.querySelector("#user-profile");
 const logoutBtn = document.querySelector("#logout-btn");
 const storyForm = document.querySelector("#story-form");
 const blogsContainer = document.querySelector(".blogs-container");
 
-// Fetch user profile
+
 async function getUserProfile(uid, userAuth) {
   const q = query(collection(db, "users"), where("uid", "==", uid));
   const snap = await getDocs(q);
@@ -29,14 +36,15 @@ async function getUserProfile(uid, userAuth) {
   return { profile, name };
 }
 
-// Safe firstName + lastName extraction
+
+
 function getNameParts(data) {
   const first = data.firstName || (data.name ? data.name.split(" ")[0] : "Anonymous");
   const last = data.lastName || (data.name ? data.name.split(" ").slice(1).join(" ") : "");
   return { firstName: first, lastName: last };
 }
 
-// Load blogs
+
 async function loadUserBlogs(uid) {
   blogsContainer.innerHTML = "Loading your blogs...";
   const q = query(collection(db, "blogs"), where("uid", "==", uid));
@@ -70,7 +78,8 @@ async function loadUserBlogs(uid) {
     blogsContainer.appendChild(card);
   });
 
-  // Delete blog
+
+  
   document.querySelectorAll(".delete-btn").forEach(btn => {
     btn.addEventListener("click", async (e) => {
       const card = e.target.closest(".blog-card");
@@ -82,7 +91,8 @@ async function loadUserBlogs(uid) {
     });
   });
 
-  // Edit blog
+
+  
   document.querySelectorAll(".edit-btn").forEach(btn => {
     btn.addEventListener("click", async (e) => {
       const card = e.target.closest(".blog-card");
@@ -105,7 +115,8 @@ async function loadUserBlogs(uid) {
   });
 }
 
-// Auth state change
+
+
 onAuthStateChanged(auth, async (user) => {
   let uidToLoad;
   if (user) {
@@ -133,7 +144,7 @@ onAuthStateChanged(auth, async (user) => {
   loadUserBlogs(uidToLoad);
 });
 
-// Publish story
+
 storyForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   const title = document.querySelector("#story-title").value;
@@ -142,7 +153,7 @@ storyForm.addEventListener("submit", async (e) => {
 
   const { profile, name } = await getUserProfile(user.uid, user);
 
-  // Safe firstName + lastName extraction for Firebase
+  
   const splitName = name.trim().split(" ");
   const firstName = splitName[0] || "Anonymous";
   const lastName = splitName.slice(1).join(" ") || "";
@@ -157,18 +168,15 @@ storyForm.addEventListener("submit", async (e) => {
     createdAt: Timestamp.fromDate(new Date()) 
   });
 
-  Swal.fire({
-    icon: "success",
-    text: "Blog Published!",
-    timer: 1300,
-    showConfirmButton: false,
-  });
+  console.log("Bblog published");
+  
 
   storyForm.reset();
   loadUserBlogs(user.uid);
 });
 
-// Logout
+
+
 logoutBtn.addEventListener("click", () => {
   signOut(auth).then(() => {
     window.location = "index.html";

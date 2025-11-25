@@ -1,4 +1,4 @@
-/* RESET */
+
 * {
   margin: 0;
   padding: 0;
@@ -6,7 +6,7 @@
   font-family: "Poppins", sans-serif;
 }
 
-/* ANIMATED BACKGROUND */
+
 body {
   height: 100vh;
   display: flex;
@@ -23,7 +23,7 @@ body {
   100% { background-position: 0% 50%; }
 }
 
-/* CARD */
+
 .login-card {
   background: rgba(255, 255, 255, 0.12);
   backdrop-filter: blur(20px);
@@ -43,7 +43,7 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* HEADER */
+
 h2 {
   text-align: center;
   font-size: 2rem;
@@ -58,7 +58,7 @@ p {
   opacity: 0.9;
 }
 
-/* FORM */
+
 form {
   display: flex;
   flex-direction: column;
@@ -88,7 +88,7 @@ input:focus {
   transform: translateY(-1px);
 }
 
-/* BUTTONS */
+
 .btn, .google-btn, #forgot-btn {
   width: 100%;
   border: none;
@@ -120,7 +120,7 @@ input:focus {
   box-shadow: 0 10px 20px rgba(0,0,0,0.2);
 }
 
-/* Forgot Password */
+
 .forgot-password {
   text-align: center;
   margin-top: 0.8rem;
@@ -133,7 +133,8 @@ input:focus {
   text-decoration: underline;
 }
 
-/* SIGNUP LINK */
+
+
 .signup {
   text-align: center;
   margin-top: 1.5rem;

@@ -1,4 +1,4 @@
-/* RESET */
+
 * {
   margin: 0;
   padding: 0;
@@ -6,7 +6,8 @@
   font-family: "Poppins", sans-serif;
 }
 
-/* ANIMATED BACKGROUND */
+
+
 body {
   min-height: 100vh;
   background: linear-gradient(135deg, #4f46e5, #10b981, #14b8a6);
@@ -21,7 +22,8 @@ body {
   100% { background-position: 0% 50%; }
 }
 
-/* NAVBAR */
+
+
 .navbar {
   width: 100%;
   padding: 18px 25px;
@@ -56,7 +58,6 @@ body {
   background: rgba(255,255,255,0.35);
 }
 
-/* BACK SECTION */
 .back-section {
   margin: 25px;
 }
@@ -82,7 +83,7 @@ text-decoration: none;
   font-weight: 700;
 }
 
-/* USER BIG INFO */
+
 .user-info {
   text-align: center;
   margin-top: 10px;
@@ -107,7 +108,8 @@ text-decoration: none;
   opacity: 0.9;
 }
 
-/* BLOG CARDS */
+
+
 .blogs-section {
   padding: 25px;
 }
@@ -162,17 +164,18 @@ text-decoration: none;
   margin-top: 8px;
   font-size: 1.5rem;
   font-weight: 700;
-    word-wrap: break-word; /* wrap long words */
+    word-wrap: break-word; 
 }
 
 .card-desc {
   margin-top: 6px;
   font-size: 1rem;
   opacity: 0.9;
-    word-wrap: break-word; /* wrap long words */
+    word-wrap: break-word; 
 }
 
-/* RESPONSIVE */
+
+
 @media (max-width: 768px){
   .login-btn {
     width: 90%;

@@ -1,4 +1,4 @@
-/* RESET */
+
 * {
   margin: 0;
   padding: 0;
@@ -6,7 +6,7 @@
   font-family: "Poppins", sans-serif;
 }
 
-/* ANIMATED BACKGROUND */
+
 body {
   min-height: 100vh;
   background: linear-gradient(135deg, #4f46e5, #10b981, #14b8a6);
@@ -21,7 +21,7 @@ body {
   100% { background-position: 0% 50%; }
 }
 
-/* NAVBAR */
+
 .navbar {
   width: 100%;
   padding: 18px 35px;
@@ -55,7 +55,7 @@ body {
   transform: translateY(-2px);
 }
 
-/* TEXT SECTION */
+
 .hero {
   text-align: center;
   margin-top: 40px;
@@ -72,7 +72,8 @@ body {
   opacity: 0.85;
 }
 
-/* BLOG CARDS */
+
+
 .blogs-container {
   width: 90%;
   max-width: 900px;
@@ -127,14 +128,14 @@ body {
   font-size: 1.5rem;
   margin-bottom: 8px;
   font-weight: 600;
-    word-wrap: break-word; /* wrap long words */
+    word-wrap: break-word; 
 }
 
 .blog-card p {
   font-size: 1rem;
   opacity: 0.9;
   line-height: 1.55;
-    word-wrap: break-word; /* wrap long words */
+    word-wrap: break-word; 
 }
 
 .see-all-btn {
