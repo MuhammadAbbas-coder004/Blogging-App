@@ -1,0 +1,196 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #4f46e5, #10b981, #14b8a6);
+  background-size: 400% 400%;
+  animation: bgMove 8s ease infinite;
+  color: white;
+}
+
+@keyframes bgMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.navbar {
+  width: 100%;
+  padding: 18px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255,255,255,0.25);
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.profile-pic-nav {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid white;
+  object-fit: cover;
+}
+
+/* --- Logout button style same as all.html login button --- */
+.logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 22px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #4f46e5, #10b981);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.2s, box-shadow 0.3s;
+}
+
+.logout-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+.back-section {
+  margin: 25px;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#back {
+  text-decoration: none;
+}
+
+.all-from {
+  margin-top: 12px;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.user-info {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.big-profile {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 3px solid white;
+  object-fit: cover;
+}
+
+.big-username {
+  font-size: 32px;
+  margin-top: 12px;
+  font-weight: 700;
+}
+
+.big-email {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.blogs-section {
+  padding: 25px;
+}
+
+.blogs-container {
+  width: 90%;
+  max-width: 900px;
+  margin: auto;
+  display: grid;
+  gap: 25px;
+}
+
+.blog-card {
+  background: rgba(255,255,255,0.18);
+  backdrop-filter: blur(20px);
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+  transition: 0.3s;
+  overflow: hidden;
+}
+
+.blog-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 22px 45px rgba(0,0,0,0.4);
+}
+
+.card-header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.profile-pic {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  border: 2px solid white;
+  object-fit: cover;
+}
+
+.user-name {
+  font-weight: 600;
+}
+
+.publish-date {
+  margin-left: auto;
+  opacity: 0.9;
+}
+
+.card-title {
+  margin-top: 8px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  word-wrap: break-word; 
+}
+
+.card-desc {
+  margin-top: 6px;
+  font-size: 1rem;
+  opacity: 0.9;
+  word-wrap: break-word; 
+}
+
+@media (max-width: 768px){
+  .logout-btn {
+    width: 90%;
+    margin: 10px auto;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+  }
+}

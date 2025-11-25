@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Blogs</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="userloginblog.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <h2 class="logo">Personal Blogging App</h2>
+  <div class="user-section">
+    <img id="user-profile" src="default-profile.jpg" alt="User Profile" class="profile-pic-nav">
+    <button id="logout-btn" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+  </div>
+</nav>
+
+<div class="back-section">
+  <a id="back" href="all.html">  
+    <button class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to all blogs</button>
+  </a>
+  <h2 class="all-from">All from John Doe</h2>
+</div>
+
+<div class="user-info">
+  <img src="#" class="big-profile">
+  <h2 class="big-username"></h2>
+  <p class="big-email"></p>
+</div>
+
+<div class="blogs-section">
+  <div class="blogs-container">
+    <!-- User blogs will load here -->
+  </div>
+</div>
+
+<script type="module" src="./alluserblogs.js"></script>
+</body>
+</html>

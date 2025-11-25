@@ -11,12 +11,14 @@
 
   <!-- NAVBAR -->
   <nav class="navbar">
-    <div class="logo">Personal Blogging App</div>
+    <div class="logo-section">
+      <div class="logo">Personal Blogging App</div>
+      <a href="all.html" class="all-btn"><i class="fas fa-book-open"></i> All Blogs</a>
+    </div>
     <div class="user-section">
       <a href="user.html">
         <img id="user-profile" src="default-profile.jpg" alt="">
       </a>
-      
       <button id="logout-btn" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
     </div>
   </nav>
@@ -30,18 +32,19 @@
   <!-- STORY FORM -->
   <section class="story-form-section">
     <form id="story-form">
-      <input type="text" placeholder="placeholder" id="story-title" required>
+      <input type="text" placeholder="Title of your story" id="story-title" required>
       <textarea placeholder="What is in your mind" id="story-desc" required></textarea>
       <button type="submit" class="publish-btn"><i class="fas fa-paper-plane"></i> Publish Blog</button>
     </form>
   </section>
+
   <section class="my-blogs">
     <h2>My Blogs</h2>
     <div class="blogs-container">
-
+      <!-- User blogs appear here -->
     </div>
   </section>
 
- <script type="module" src="home.js"></script> 
+  <script type="module" src="home.js"></script> 
 </body>
 </html>
