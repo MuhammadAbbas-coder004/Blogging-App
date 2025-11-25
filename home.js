@@ -7,6 +7,7 @@ const logoutBtn = document.querySelector("#logout-btn");
 const storyForm = document.querySelector("#story-form");
 const blogsContainer = document.querySelector(".blogs-container");
 
+// Fetch user profile
 async function getUserProfile(uid, userAuth) {
   const q = query(collection(db, "users"), where("uid", "==", uid));
   const snap = await getDocs(q);
@@ -28,6 +29,14 @@ async function getUserProfile(uid, userAuth) {
   return { profile, name };
 }
 
+// Safe firstName + lastName extraction
+function getNameParts(data) {
+  const first = data.firstName || (data.name ? data.name.split(" ")[0] : "Anonymous");
+  const last = data.lastName || (data.name ? data.name.split(" ").slice(1).join(" ") : "");
+  return { firstName: first, lastName: last };
+}
+
+// Load blogs
 async function loadUserBlogs(uid) {
   blogsContainer.innerHTML = "Loading your blogs...";
   const q = query(collection(db, "blogs"), where("uid", "==", uid));
@@ -39,6 +48,8 @@ async function loadUserBlogs(uid) {
     const date = data.createdAt ? data.createdAt.toDate() : new Date();
     const formattedDate = date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 
+    const nameParts = getNameParts(data);
+
     const card = document.createElement("div");
     card.classList.add("blog-card");
     card.dataset.id = docSnap.id;
@@ -46,7 +57,7 @@ async function loadUserBlogs(uid) {
     card.innerHTML = `
       <div class="card-header">
         <img src="${data.profile}" alt="User Profile" class="profile-pic">
-        <span class="user-name">${data.firstName || data.name || "Anonymous"} ${data.lastName || ""}</span>
+        <span class="user-name">${nameParts.firstName} ${nameParts.lastName}</span>
         <span class="publish-date">${formattedDate}</span>
       </div>
       <h3 class="card-title">${data.title}</h3>
@@ -59,11 +70,11 @@ async function loadUserBlogs(uid) {
     blogsContainer.appendChild(card);
   });
 
+  // Delete blog
   document.querySelectorAll(".delete-btn").forEach(btn => {
     btn.addEventListener("click", async (e) => {
       const card = e.target.closest(".blog-card");
       const blogId = card.dataset.id;
-
       if (confirm("Are you sure you want to delete this blog?")) {
         await deleteDoc(doc(db, "blogs", blogId));
         loadUserBlogs(uid);
@@ -71,6 +82,7 @@ async function loadUserBlogs(uid) {
     });
   });
 
+  // Edit blog
   document.querySelectorAll(".edit-btn").forEach(btn => {
     btn.addEventListener("click", async (e) => {
       const card = e.target.closest(".blog-card");
@@ -87,18 +99,17 @@ async function loadUserBlogs(uid) {
           title: newTitle,
           description: newDesc
         });
-
         loadUserBlogs(uid);
       }
     });
   });
 }
 
-
+// Auth state change
 onAuthStateChanged(auth, async (user) => {
   let uidToLoad;
   if (user) {
-const { profile, name } = await getUserProfile(user.uid, user);
+    const { profile, name } = await getUserProfile(user.uid, user);
     userImg.src = profile;
 
     await setDoc(doc(db, "users", user.uid), {
@@ -107,23 +118,22 @@ const { profile, name } = await getUserProfile(user.uid, user);
       uid: user.uid
     }, { merge: true });
 
-   
     uidToLoad = user.uid;
-   
     localStorage.setItem("lastLoggedInUID", uidToLoad);
   } else {
     const storedUID = localStorage.getItem("lastLoggedInUID");
     if (storedUID) {
       uidToLoad = storedUID;
     } else {
-    
       window.location = "index.html";
       return;
-    }}
+    }
+  }
 
   loadUserBlogs(uidToLoad);
 });
 
+// Publish story
 storyForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   const title = document.querySelector("#story-title").value;
@@ -132,13 +142,18 @@ storyForm.addEventListener("submit", async (e) => {
 
   const { profile, name } = await getUserProfile(user.uid, user);
 
+  // Safe firstName + lastName extraction for Firebase
+  const splitName = name.trim().split(" ");
+  const firstName = splitName[0] || "Anonymous";
+  const lastName = splitName.slice(1).join(" ") || "";
+
   await addDoc(collection(db, "blogs"), {
     title,
     description: desc,
     uid: user.uid,
     profile,
-    firstName: name.split(" ")[0] || "",
-    lastName: name.split(" ")[1] || "",
+    firstName,
+    lastName,
     createdAt: Timestamp.fromDate(new Date()) 
   });
 
@@ -153,6 +168,7 @@ storyForm.addEventListener("submit", async (e) => {
   loadUserBlogs(user.uid);
 });
 
+// Logout
 logoutBtn.addEventListener("click", () => {
   signOut(auth).then(() => {
     window.location = "index.html";

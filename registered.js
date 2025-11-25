@@ -1,17 +1,16 @@
 import { 
   createUserWithEmailAndPassword, 
   signInWithPopup 
-} from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+}
+ from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
 
-import { auth, provider, db } from "./config.js";
+ import { auth, provider, db } from "./config.js";
 
-import { 
-  collection, 
-  addDoc, 
+ import { 
   setDoc, 
   doc 
-} from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
-
+}
+ from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
 
 
 let uploadImage = null;
@@ -37,21 +36,17 @@ const myWidget = cloudinary.createUploadWidget(
 
 document.getElementById("profilePic").addEventListener("click", () => {
   myWidget.open();
-});
-
-
+}
+);
 
 const registerForm = document.querySelector("#signup-form");
 const firstName = document.querySelector("#f-Name");
 const lastName = document.querySelector("#l-Name");
 const email = document.querySelector("#email");
 const password = document.querySelector("#password");
-const confirmPassword = document.querySelector("#C-password");
-
-
-
+ const confirmPassword = document.querySelector("#C-password");
 registerForm.addEventListener("submit", async (event) => {
-  event.preventDefault();
+event.preventDefault();
 
   if (!firstName.value || !lastName.value || !email.value || !password.value || !confirmPassword.value) {
     return Swal.fire({
@@ -74,8 +69,7 @@ registerForm.addEventListener("submit", async (event) => {
     });
   }
 
-  try {
-
+try {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       email.value,
@@ -83,6 +77,7 @@ registerForm.addEventListener("submit", async (event) => {
     );
 
     const user = userCredential.user;
+
     await setDoc(doc(db, "users", user.uid), {
       firstName: firstName.value,
       lastName: lastName.value,
@@ -96,7 +91,7 @@ registerForm.addEventListener("submit", async (event) => {
       title: "Registration Successful!",
       text: "Your account has been registered.",
     }).then(() => {
-      window.location = "login.html";
+      window.location = "home.html";
     });
 
   } catch (error) {
@@ -110,6 +105,7 @@ registerForm.addEventListener("submit", async (event) => {
     });
   }
 });
+
 const googleBtn = document.querySelector("#google-btn");
 
 googleBtn.addEventListener("click", () => {
