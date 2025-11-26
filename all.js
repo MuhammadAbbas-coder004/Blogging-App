@@ -10,7 +10,7 @@ const userProfileNav = document.querySelector("#user-profile");
 if (loginBtn) loginBtn.addEventListener("click", () => window.location.href = "login.html");
 if (logoutBtn) logoutBtn.addEventListener("click", () => signOut(auth).then(() => window.location.href="index.html"));
 
-// Get user profile from Firestore using UID
+
 async function getUserProfile(uid) {
   const q = query(collection(db, "users"), where("uid", "==", uid));
   const snap = await getDocs(q);
@@ -21,7 +21,7 @@ async function getUserProfile(uid) {
   return "default-profile.jpg";
 }
 
-// Load all blogs with correct profile pics
+
 async function loadAllBlogs() {
   blogsContainer.innerHTML = "Loading blogs...";
   const q = query(collection(db, "blogs"), orderBy("createdAt", "desc"));
@@ -33,7 +33,7 @@ async function loadAllBlogs() {
     const date = data.createdAt ? data.createdAt.toDate() : new Date();
     const formattedDate = date.toLocaleDateString("en-US", { month:"short", day:"numeric", year:"numeric" });
 
-    // Get profile pic for this user
+
     const profilePic = data.profile || await getUserProfile(data.uid);
 
     const firstName = data.firstName || data.name || "Anonymous";
@@ -52,20 +52,20 @@ async function loadAllBlogs() {
       <button class="see-all-btn"><i class="fas fa-eye"></i> See all from this user</button>
     `;
 
-    // Button: See all blogs from this user
+
     cardHTML.querySelector(".see-all-btn").addEventListener("click", () => {
       localStorage.setItem("selectedUserUID", data.uid);
-      window.location.href = "userblogs.html";
+      window.location.href = "userloginblog.html";
     });
 
     blogsContainer.appendChild(cardHTML);
   }
 }
 
-// Track logged-in user for navbar profile pic
+
 onAuthStateChanged(auth, async (user) => {
   if (user) {
-    // Try auth photoURL first, fallback to Firestore
+    
     let profile = user.photoURL || await getUserProfile(user.uid) || "default-profile.jpg";
     userProfileNav.src = profile;
   } else {
